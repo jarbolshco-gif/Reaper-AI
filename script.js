@@ -6,16 +6,16 @@ BSIT 2A
 "use strict";
 
 const AUDIO = {
-  hello: "media/audio/Hello3.mp3",
-  defaultReply: "media/audio/.mp3",
-  tuition: "media/audio/tuition.mp3",
-  enrollment: "media/audio/enrollment.mp3",
-  installment: "media/audio/installment.mp3",
-  tor: "media/audio/tor.mp3",
-  calendar: "media/audio/calendar.mp3",
-  conflict: "media/audio/conflict.mp3",
-  welcome: "media/audio/welcome.mp3",
-  bye: "media/audio/bye.mp3"
+  hello: "Hello3.mp3",
+  defaultReply: ".mp3",
+  tuition: "tuition.mp3",
+  enrollment: "enrollment.mp3",
+  installment: "installment.mp3",
+  tor: "tor.mp3",
+  calendar: "calendar.mp3",
+  conflict: "conflict.mp3",
+  welcome: "welcome.mp3",
+  bye: "bye.mp3"
 };
 
 const DATA = {
