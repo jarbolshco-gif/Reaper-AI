@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reaper • Scripted Assistant</title>
+
+  <!--fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="topbar">
+    <div class="topbar-left">
+      <div class="brand">
+        <span class="dot" aria-hidden="true"></span>
+        <div class="brand-text">
+          <strong>Reaper AI</strong>
+          <small>A Scripted Chatbot Designed by Bernardo, Josh Andrei R.</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="topbar-right" role="navigation" aria-label="Pages">
+      <div class="chips nav-chips">
+        <a class="chip chip-link active" href="index.html" aria-current="page">Reaper</a>
+        <a class="chip chip-link" href="../quiz/index.html">Take a Test</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="shell" aria-label="Main content">
+    <section class="hero" aria-label="Assistant identity">
+      <div id="logoWrap" class="logo-wrap" role="img" aria-label="Reaper logo">
+        <img id="reaperLogo" src="media/images/Reaper_AI.png" alt="Reaper logo">
+        <div class="logo-glow" aria-hidden="true"></div>
+        <div class="logo-ring" aria-hidden="true"></div>
+      </div>
+
+      <h1 class="hero-title">Scripted answers + Voice lines</h1>
+      <p class="hero-subtitle">
+        Click <strong>Ask</strong> on a predefined question or send a keyword and I will reply (I am obligated to do so).
+      </p>
+    </section>
+
+    <section class="layout" aria-label="Assistant layout">
+      <aside class="left" aria-label="Categories and questions">
+        <div class="panel">
+          <h2 class="panel-title">Categories</h2>
+
+          <div class="chips" role="tablist" aria-label="Categories">
+            <button
+              id="tab-fees"
+              class="chip active"
+              type="button"
+              data-category="fees"
+              role="tab"
+              aria-selected="true"
+              aria-controls="panel-fees"
+            >Fees</button>
+
+            <button
+              id="tab-academics"
+              class="chip"
+              type="button"
+              data-category="academics"
+              role="tab"
+              aria-selected="false"
+              aria-controls="panel-academics"
+            >Academics</button>
+
+            <button
+              id="tab-services"
+              class="chip"
+              type="button"
+              data-category="services"
+              role="tab"
+              aria-selected="false"
+              aria-controls="panel-services"
+            >Student Services</button>
+          </div>
+
+          <div class="sr-only">
+            <div id="panel-fees" role="tabpanel" tabindex="0" aria-labelledby="tab-fees">Fees questions panel.</div>
+            <div id="panel-academics" role="tabpanel" tabindex="0" aria-labelledby="tab-academics">Academics questions panel.</div>
+            <div id="panel-services" role="tabpanel" tabindex="0" aria-labelledby="tab-services">Student services questions panel.</div>
+          </div>
+
+          <div class="divider" aria-hidden="true"></div>
+
+          <h3 class="muted-title">Predefined Questions</h3>
+          <div id="questionList" class="question-list" aria-live="polite"></div>
+        </div>
+      </aside>
+
+      <section class="right" aria-label="Chat area">
+        <div class="panel chat-panel">
+          <div id="chat" class="chat" role="log" aria-live="polite" aria-relevant="additions">
+            <div id="startPrompt" class="start-prompt" aria-live="polite">
+              Say <strong>Hello</strong> to Reaper to get started.
+            </div>
+          </div>
+
+          <form id="inputForm" class="inputbar" autocomplete="off" aria-label="Type a message">
+            <label class="sr-only" for="userInput">Type your message</label>
+            <input
+              id="userInput"
+              type="text"
+              placeholder="Type: hello, tuition, deadline, installment…"
+              maxlength="120"
+            >
+            <button class="btn white" type="submit">Send</button>
+            <button id="voiceToggleBtn" class="btn ghost" type="button" aria-pressed="true">
+              Voice: On
+            </button>
+          </form>
+
+          <p class="hint">Tip: Reaper can talk.</p>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <small>Reaper • Scripted logic only • Bernardo, Josh Andrei R.</small>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
