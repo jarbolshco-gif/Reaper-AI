@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Reaper • Scripted Assistant</title>
+  <title>Reaper • Quiz Tool</title>
 
-  <!--fonts -->
+  <!-- Modern fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
@@ -20,114 +20,103 @@
       <div class="brand">
         <span class="dot" aria-hidden="true"></span>
         <div class="brand-text">
-          <strong>Reaper AI</strong>
-          <small>A Scripted Chatbot Designed by Bernardo, Josh Andrei R.</small>
+          <strong>Reaper</strong>
+          <small>Educational Quiz Tool</small>
         </div>
       </div>
     </div>
 
+    <!-- Pages: add a role so aria-label is valid on this div -->
     <div class="topbar-right" role="navigation" aria-label="Pages">
       <div class="chips nav-chips">
-        <a class="chip chip-link active" href="index.html" aria-current="page">Reaper</a>
-        <a class="chip chip-link" href="../quiz/index.html">Take a Test</a>
+        <a class="chip chip-link" href="../reaper_ai_assistant/index.html">Reaper</a>
+        <a class="chip chip-link active" href="index.html" aria-current="page">Test in Progress</a>
       </div>
     </div>
   </header>
 
   <main id="main" class="shell" aria-label="Main content">
-    <section class="hero" aria-label="Assistant identity">
-      <div id="logoWrap" class="logo-wrap" role="img" aria-label="Reaper logo">
-        <img id="reaperLogo" src="media/images/Reaper_AI.png" alt="Reaper logo">
+    <section class="hero" aria-label="Quiz identity">
+      <!-- role=img makes aria-label valid here -->
+      <div class="logo-wrap" role="img" aria-label="Reaper logo">
+        <img src="media/images/Reaper_AI.png" alt="Reaper logo">
         <div class="logo-glow" aria-hidden="true"></div>
         <div class="logo-ring" aria-hidden="true"></div>
       </div>
 
-      <h1 class="hero-title">Scripted answers + Voice lines</h1>
+      <h1 class="hero-title">Let's pick that brain.</h1>
       <p class="hero-subtitle">
-        Click <strong>Ask</strong> on a predefined question or send a keyword and I will reply (I am obligated to do so).
+        10 questions • 1 minute per question • shows score
       </p>
     </section>
 
-    <section class="layout" aria-label="Assistant layout">
-      <aside class="left" aria-label="Categories and questions">
-        <div class="panel">
-          <h2 class="panel-title">Categories</h2>
+    <!-- Start screen overlay -->
+    <div id="startOverlay" class="overlay" role="dialog" aria-modal="true" aria-label="Take the Test">
+      <div class="overlay-card">
+        <h2 class="overlay-title">Ready for the Test?</h2>
+        <p class="overlay-subtitle">
+          You have <strong>1 minute</strong> for each question. When time runs out, it will move to the next question.
+        </p>
 
-          <div class="chips" role="tablist" aria-label="Categories">
-            <button
-              id="tab-fees"
-              class="chip active"
-              type="button"
-              data-category="fees"
-              role="tab"
-              aria-selected="true"
-              aria-controls="panel-fees"
-            >Fees</button>
+        <div class="overlay-actions">
+          <button id="startQuizBtn" class="btn white" type="button">Start Test</button>
+          <a class="btn ghost overlay-link" href="../reaper_ai_assistant/index.html">Back to Reaper</a>
+        </div>
 
-            <button
-              id="tab-academics"
-              class="chip"
-              type="button"
-              data-category="academics"
-              role="tab"
-              aria-selected="false"
-              aria-controls="panel-academics"
-            >Academics</button>
+        <p class="hint" style="margin-top:10px;">
+          Tip: You can restart anytime.
+        </p>
+      </div>
+    </div>
 
-            <button
-              id="tab-services"
-              class="chip"
-              type="button"
-              data-category="services"
-              role="tab"
-              aria-selected="false"
-              aria-controls="panel-services"
-            >Student Services</button>
-          </div>
+    <section class="quiz-stage" aria-label="Quiz stage">
+      <div class="quiz-grid">
+        <!-- Left: quiz card -->
+        <section class="panel quiz-panel" aria-label="Quiz card">
+          <div class="quiz-top">
+            <div class="pill">
+              <div class="pill-label">Time Left</div>
+              <div id="timerText" class="pill-value" aria-live="polite">01:00</div>
+            </div>
 
-          <div class="sr-only">
-            <div id="panel-fees" role="tabpanel" tabindex="0" aria-labelledby="tab-fees">Fees questions panel.</div>
-            <div id="panel-academics" role="tabpanel" tabindex="0" aria-labelledby="tab-academics">Academics questions panel.</div>
-            <div id="panel-services" role="tabpanel" tabindex="0" aria-labelledby="tab-services">Student services questions panel.</div>
+            <div class="pill">
+              <div class="pill-label">Question</div>
+              <div id="qCountText" class="pill-value">1 / 10</div>
+            </div>
+
+            <button id="restartBtn" class="btn ghost" type="button">Restart</button>
           </div>
 
           <div class="divider" aria-hidden="true"></div>
 
-          <h3 class="muted-title">Predefined Questions</h3>
-          <div id="questionList" class="question-list" aria-live="polite"></div>
-        </div>
-      </aside>
+          <h2 id="qTitle" class="q-title">Question goes here</h2>
 
-      <section class="right" aria-label="Chat area">
-        <div class="panel chat-panel">
-          <div id="chat" class="chat" role="log" aria-live="polite" aria-relevant="additions">
-            <div id="startPrompt" class="start-prompt" aria-live="polite">
-              Say <strong>Hello</strong> to Reaper to get started.
-            </div>
+          <div id="choices" class="choices" role="radiogroup" aria-label="Answer choices"></div>
+
+          <div class="quiz-nav">
+            <button id="prevBtn" class="btn ghost" type="button">Previous</button>
+            <button id="nextBtn" class="btn white" type="button">Next</button>
+          </div>
+        </section>
+
+        <!-- Right: result card -->
+        <aside class="panel result-panel" aria-label="Result panel">
+          <h2 class="panel-title">Result</h2>
+
+          <div class="result-box" id="resultBox" aria-live="polite">
+            <p class="result-muted">Start the quiz to see your score.</p>
           </div>
 
-          <form id="inputForm" class="inputbar" autocomplete="off" aria-label="Type a message">
-            <label class="sr-only" for="userInput">Type your message</label>
-            <input
-              id="userInput"
-              type="text"
-              placeholder="Type: hello, tuition, deadline, installment…"
-              maxlength="120"
-            >
-            <button class="btn white" type="submit">Send</button>
-            <button id="voiceToggleBtn" class="btn ghost" type="button" aria-pressed="true">
-              Voice: On
-            </button>
-          </form>
-
-          <p class="hint">Tip: Reaper can talk.</p>
-        </div>
-      </section>
+          <p class="result-note">
+            Scoring format: “You got X correct answers out of 10.”
+          </p>
+        </aside>
+      </div>
     </section>
   </main>
 
   <footer class="footer">
-    <small>Reaper • Scripted logic only • Bernardo, Josh Andrei R.</small>
+    <small>Built with HTML, CSS, and JavaScript (no AI).</small>
   </footer>
 
   <script src="script.js" defer></script>
